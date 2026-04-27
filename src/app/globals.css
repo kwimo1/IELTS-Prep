@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --page: #f7f2e6;
+  --page-accent: #ebdfbe;
+  --surface: rgba(255, 255, 255, 0.94);
+  --surface-strong: #0d2d63;
+  --surface-soft: #edf3ff;
+  --border: rgba(13, 45, 99, 0.12);
+  --text: #12284f;
+  --muted: #596b91;
+  --accent: #c89a2e;
+  --accent-strong: #9f7311;
+  --accent-soft: #f7e5af;
+  --success: #1e7a58;
+  --danger: #ab3d3d;
+  --shadow: 0 22px 60px rgba(8, 28, 64, 0.12);
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, rgba(200, 154, 46, 0.24), transparent 28%),
+    radial-gradient(circle at left center, rgba(13, 45, 99, 0.12), transparent 38%),
+    linear-gradient(180deg, #fbf7ec 0%, var(--page) 100%);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+button,
+input,
+textarea {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+::selection {
+  background: rgba(200, 154, 46, 0.3);
+}
+
+.shell {
+  margin-inline: auto;
+  width: min(1120px, calc(100% - 1.5rem));
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.gold-ring {
+  box-shadow:
+    0 0 0 1px rgba(200, 154, 46, 0.3),
+    0 14px 30px rgba(200, 154, 46, 0.18);
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(13, 45, 99, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 45, 99, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a,
+  button,
+  input,
+  textarea {
+    transition: none;
+  }
+}
