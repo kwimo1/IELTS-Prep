@@ -103,6 +103,14 @@ export function AccessPortal() {
       </div>
 
       <div className="space-y-4">
+        <div className="rounded-[1.4rem] border border-[rgba(13,45,99,0.08)] bg-[rgba(237,243,255,0.4)] px-4 py-4 text-sm leading-7 text-[var(--muted)]">
+          تسجيل دخول الطالب يعمل فقط بعد:
+          <br />
+          1. رفع إثبات الدفع
+          <br />
+          2. تفعيل الحساب من الإدارة
+        </div>
+
         <label className="block space-y-2">
           <span className="text-sm font-bold text-[var(--text)]">رقم الهاتف</span>
           <input

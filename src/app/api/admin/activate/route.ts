@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { getAdminSession } from "@/lib/auth";
+import { getFriendlyServerError } from "@/lib/runtime-errors";
 import { getSupabaseServerClient } from "@/lib/supabase";
 import { activateUserSchema } from "@/lib/validators";
 
@@ -57,8 +58,13 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "تعذر تفعيل الحساب حالياً." },
-      { status: 500 },
+      {
+        message: getFriendlyServerError(
+          error,
+          "تعذر تفعيل الحساب حالياً.",
+        ),
+      },
+      { status: 503 },
     );
   }
 }

@@ -17,10 +17,18 @@ export function AdminPanel({
   initialSessionActive,
   initialPendingUsers,
   initialActiveUsers,
+  adminUsesDefaultCredentials,
+  defaultAdminEmail,
+  defaultAdminPassword,
+  setupMessage,
 }: {
   initialSessionActive: boolean;
   initialPendingUsers: AdminUserSummary[];
   initialActiveUsers: AdminUserSummary[];
+  adminUsesDefaultCredentials: boolean;
+  defaultAdminEmail: string;
+  defaultAdminPassword: string;
+  setupMessage?: string;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -138,6 +146,28 @@ export function AdminPanel({
         <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
           سجّل الدخول ببريد الإدارة وكلمة المرور الموجودة في متغيرات البيئة.
         </p>
+
+        {adminUsesDefaultCredentials ? (
+          <div className="mt-4 rounded-[1.5rem] border border-[rgba(200,154,46,0.25)] bg-[rgba(247,229,175,0.28)] px-4 py-4 text-sm leading-7 text-[var(--text)]">
+            <p className="font-extrabold text-[var(--accent-strong)]">بيانات إدارة الديمو الحالية</p>
+            <p className="mt-2">
+              البريد: <span className="font-bold">{defaultAdminEmail}</span>
+            </p>
+            <p>
+              كلمة المرور: <span className="font-bold">{defaultAdminPassword}</span>
+            </p>
+          </div>
+        ) : (
+          <div className="mt-4 rounded-[1.5rem] border border-[rgba(13,45,99,0.08)] bg-[rgba(237,243,255,0.35)] px-4 py-4 text-sm leading-7 text-[var(--muted)]">
+            هذا النشر يستخدم بيانات إدارة من متغيرات البيئة `ADMIN_EMAIL` و`ADMIN_PASSWORD`.
+          </div>
+        )}
+
+        {setupMessage ? (
+          <div className="mt-4 rounded-[1.5rem] border border-[rgba(171,61,61,0.16)] bg-[rgba(171,61,61,0.08)] px-4 py-4 text-sm leading-7 text-[var(--danger)]">
+            {setupMessage}
+          </div>
+        ) : null}
 
         <div className="mt-6 space-y-4">
           <label className="block space-y-2">

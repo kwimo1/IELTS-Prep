@@ -1,0 +1,15 @@
+
+> ielts-prep@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.20.10.10:3000
+✓ Ready in 397ms
+
+ GET /admin 200 in 285ms (next.js: 169ms, application-code: 116ms)
+ POST /api/auth/login 503 in 360ms (next.js: 354ms, application-code: 6ms)
+ POST /api/admin/login 200 in 321ms (next.js: 262ms, application-code: 60ms)
+ POST /api/auth/login 503 in 5ms (next.js: 1906µs, application-code: 3ms)
+ POST /api/admin/users 405 in 112ms (next.js: 109ms, application-code: 3ms)
+ POST /api/auth/login 503 in 5ms (next.js: 1758µs, application-code: 4ms)

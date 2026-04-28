@@ -3,6 +3,7 @@ import { ZodError } from "zod";
 import { adminLoginSchema } from "@/lib/validators";
 import { createAdminSessionToken, setAdminSessionCookie } from "@/lib/auth";
 import { getAdminCredentials } from "@/lib/env";
+import { getFriendlyServerError } from "@/lib/runtime-errors";
 
 export const runtime = "nodejs";
 
@@ -45,8 +46,13 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "تعذر تسجيل الدخول إلى لوحة الإدارة." },
-      { status: 500 },
+      {
+        message: getFriendlyServerError(
+          error,
+          "تعذر تسجيل الدخول إلى لوحة الإدارة.",
+        ),
+      },
+      { status: 503 },
     );
   }
 }

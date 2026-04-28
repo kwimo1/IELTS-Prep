@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { AccessPortal } from "@/components/home/access-portal";
 import { getUserSession } from "@/lib/auth";
+import { getPublicAppStatus } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,7 @@ const featureCards = [
 
 export default async function HomePage() {
   const session = await getUserSession();
+  const appStatus = getPublicAppStatus();
 
   if (session) {
     redirect("/dashboard");
@@ -90,7 +92,19 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <AccessPortal />
+          <div className="space-y-4">
+            {appStatus.missingSupabaseEnvVars.length > 0 ? (
+              <div className="rounded-[1.7rem] border border-[rgba(171,61,61,0.16)] bg-[rgba(171,61,61,0.08)] px-5 py-5 text-sm leading-7 text-[var(--danger)]">
+                هذا النشر غير مكتمل الإعداد حالياً. أضف متغيرات Supabase التالية في Vercel حتى
+                يعمل تسجيل الطلاب ورفع إثبات الدفع:
+                <div className="mt-2 font-bold">
+                  {appStatus.missingSupabaseEnvVars.join("، ")}
+                </div>
+              </div>
+            ) : null}
+
+            <AccessPortal />
+          </div>
         </section>
       </div>
     </main>

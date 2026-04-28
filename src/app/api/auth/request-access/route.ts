@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { hashPassword } from "@/lib/passwords";
+import { getFriendlyServerError } from "@/lib/runtime-errors";
 import { PAYMENT_PROOF_BUCKET, getSupabaseServerClient } from "@/lib/supabase";
 import {
   credentialsSchema,
@@ -131,9 +132,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: "تعذر إرسال الطلب حالياً. تأكد من إعداد Supabase ثم حاول مجدداً.",
+        message: getFriendlyServerError(
+          error,
+          "تعذر إرسال الطلب حالياً. تأكد من إعداد Supabase ثم حاول مجدداً.",
+        ),
       },
-      { status: 500 },
+      { status: 503 },
     );
   }
 }

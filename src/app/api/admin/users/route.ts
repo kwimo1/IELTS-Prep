@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import { fetchAdminUserLists } from "@/lib/admin-users";
+import { getFriendlyServerError } from "@/lib/runtime-errors";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,10 +27,15 @@ export async function GET() {
         },
       },
     );
-  } catch {
+  } catch (error) {
     return NextResponse.json(
-      { message: "تعذر تحميل المستخدمين من قاعدة البيانات." },
-      { status: 500 },
+      {
+        message: getFriendlyServerError(
+          error,
+          "تعذر تحميل المستخدمين من قاعدة البيانات.",
+        ),
+      },
+      { status: 503 },
     );
   }
 }

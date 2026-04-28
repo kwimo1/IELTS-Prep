@@ -1,11 +1,13 @@
 import { AdminPanel } from "@/components/admin/admin-panel";
 import { getAdminSession } from "@/lib/auth";
 import { fetchAdminUserLists } from "@/lib/admin-users";
+import { getPublicAppStatus } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const session = await getAdminSession();
+  const appStatus = getPublicAppStatus();
   const initialData = session
     ? await fetchAdminUserLists().catch(() => ({
         pendingUsers: [],
@@ -23,6 +25,14 @@ export default async function AdminPage() {
           initialSessionActive={Boolean(session)}
           initialPendingUsers={initialData.pendingUsers}
           initialActiveUsers={initialData.activeUsers}
+          adminUsesDefaultCredentials={appStatus.adminUsesDefaultCredentials}
+          defaultAdminEmail={appStatus.defaultAdminEmail}
+          defaultAdminPassword={appStatus.defaultAdminPassword}
+          setupMessage={
+            appStatus.missingSupabaseEnvVars.length > 0
+              ? `إعداد Supabase غير مكتمل على هذا النشر: ${appStatus.missingSupabaseEnvVars.join(", ")}`
+              : undefined
+          }
         />
       </div>
     </main>

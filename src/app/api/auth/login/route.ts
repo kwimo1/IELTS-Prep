@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { createUserSessionToken, setUserSessionCookie } from "@/lib/auth";
 import { verifyPassword } from "@/lib/passwords";
+import { getFriendlyServerError } from "@/lib/runtime-errors";
 import { getSupabaseServerClient } from "@/lib/supabase";
 import { credentialsSchema, normalizePhone } from "@/lib/validators";
 
@@ -71,8 +72,13 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "تعذر تسجيل الدخول حالياً." },
-      { status: 500 },
+      {
+        message: getFriendlyServerError(
+          error,
+          "تعذر تسجيل دخول الطالب حالياً.",
+        ),
+      },
+      { status: 503 },
     );
   }
 }
